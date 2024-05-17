@@ -13,8 +13,20 @@ function App() {
     setMessages([...messages, newMessage]);
     setInput('');
 
+    const config = {
+      message: input,
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      //   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+      // }
+    }
+
     try {
-      const response = await axios.post('http://127.0.0.1:5000/chat', { message: input });
+      console.log('Sending message:', input);
+      const response = await axios.post('http://localhost:5001/chat', config);
+      console.log('Response:', response.data);
+
       const botMessage = { text: response.data.response, user: false };
       setMessages([...messages, newMessage, botMessage]);
     } catch (error) {
